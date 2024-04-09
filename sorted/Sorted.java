@@ -1,5 +1,7 @@
 package sorted;
 
+import java.util.Random;
+
 /**
  *
  * @author
@@ -60,5 +62,35 @@ public class Sorted {
         } else {
             return searchItemRec(arr, ele, start, mid - 1);
         }
+    }
+    
+//PARTE 5
+    public static int[] dataSet(int n) {
+        int[] A = new int[n];
+        for (int i = 0; i < n; i++) {
+            A[i] = i;
+        }
+        permute(A);
+        return A;
+    }
+    
+    private static void permute(int[] A) {
+        Random rand = new Random();
+        for (int i = A.length - 1; i >= 1; i--) {
+            int j = rand.nextInt(i + 1);
+            int temp = A[i];
+            A[i] = A[j];
+            A[j] = temp;
+        }
+    }
+
+    public static void main(String[] args) {
+        
+        int[] data = dataSet(100);
+        System.out.println("Datos generados y permutados:");
+        for (int num : data) {
+            System.out.print(num + " ");
+        }
+        System.out.println();
     }
 }
