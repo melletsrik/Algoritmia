@@ -184,7 +184,7 @@ public class Sorted {
         permute(arr);
         return arr;
     }
-    
+
     private static void permute(Integer[] A) {
         Random rand = new Random();
         for (int i = A.length - 1; i >= 1; i--) {
@@ -195,5 +195,4 @@ public class Sorted {
         }
     }
 
-    
 }

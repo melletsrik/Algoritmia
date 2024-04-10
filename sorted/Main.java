@@ -9,22 +9,19 @@ public class Main {
         Persona p2 = new Persona(1, "Pedro", 65.2f);
         Persona p3 = new Persona(2, "Ana", 60.8f);
         Persona[] personas = {p1,p2,p3};
-        
-        
-        
+                
         System.out.println("int - antes de ordenar:");
         Sorted.listAll(intArray);
-        Sorted.shellSort(intArray);
+        Sorted.bucketSort(intArray,2);
         System.out.println("int - despues de ordenar:");
         Sorted.listAll(intArray);
         System.out.println("Persona - antes de ordenar:");
         Sorted.listAll(personas);
-        Sorted.shellSort(personas);
+        Sorted.mergeSort(personas);
         System.out.println("Persona - despues de ordenar:");
         Sorted.listAll(personas);
         System.out.println(Sorted.searchItem(intArray,2));
-        System.out.println(Sorted.searchItem(personas,p1));
-        
+        System.out.println(Sorted.searchItem(personas,p1));  
     }
 }
 
