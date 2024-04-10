@@ -30,7 +30,11 @@ public class Persona implements Comparable<Persona> {
 
     @Override
     public String toString() {
-        return nombre;
+        return "{" +
+                "codigo=" + codigo +
+                ", nombre='" + nombre + '\'' +
+                ", peso=" + peso +
+                '}';
     }
     
 }
