@@ -1,6 +1,6 @@
-package BSTree;
+package BST;
 
-public class BSTree <E extends Comparable <E>> {
+public class BST <E extends Comparable <E>> {
     
     class Node<E> {
 
@@ -26,7 +26,7 @@ public class BSTree <E extends Comparable <E>> {
 
     private Node root;
     
-    public BSTree(){
+    public BST(){
         this.root = null;
     }
     
@@ -75,13 +75,25 @@ public class BSTree <E extends Comparable <E>> {
         return res;
     }
     
-    public E minRecover() {
-        Node<E> current = this.root;
-        while (current.left != null) {
-            current = current.left;
-        }
-        return current.data;
+    // Modificamos minRecover para que devuelva el nodo mínimo y lo eliminamos en un solo método
+protected Node<E> minRecoverAndRemove(Node<E> actual) {
+    if (actual.left != null) {
+        actual.left = minRecoverAndRemove(actual.left);
+        return actual;
+    } else {
+        return actual.right; // El nodo actual es el mínimo, lo eliminamos y devolvemos su hijo derecho
     }
+}
+
+// Actualizamos minRemove para utilizar el nuevo método
+public E minRemove() throws ItemNotFound {
+    if (this.root == null) {
+        throw new ItemNotFound("El árbol está vacío");
+    }
+    Node<E> minNode = minRecoverAndRemove(this.root);
+    return minNode.data;
+}
+
 
     protected Node<E> minRecover(Node<E> actual) {
         while (actual.left != null) {
@@ -90,22 +102,6 @@ public class BSTree <E extends Comparable <E>> {
         return actual;
     }
 
-    //Precondition : BST is not isEmpty
-    public E minRemove() {
-        E min = minRecover(); // recupera el menor del BST
-        this.root = minRemove(this.root);
-        return min;
-    }
-        
-    protected Node<E> minRemove(Node<E> actual) {
-        if (actual.left != null) { //buscamos	el	mínimo
-            actual.left = minRemove(actual.left);
-        } else { //eliminamos	el	minimo
-            actual = actual.right;
-        }
-        return actual;
-    }
-    
     public void remove(E x) throws ItemNotFound {
         this.root = removeRec(x, this.root);
     }
@@ -122,7 +118,7 @@ public class BSTree <E extends Comparable <E>> {
             res.left = removeRec(x, actual.left);
         } else if (actual.left != null && actual.right != null) { //dos hijos
             res.data = minRecover(actual.right).data;
-            res.right = minRemove(actual.right);
+            res.right = minRecoverAndRemove(actual.right);
         } else { //1 hijo o ninguno
             res = (actual.left != null) ? actual.left : actual.right;
         }
